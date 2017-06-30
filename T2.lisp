@@ -17,6 +17,15 @@
 (if (not (equal (car l-aux) e))
 (setq res (append res (list (car l-aux)))))))
 
+;Intersecção entre duas listas
+(defun inter (L1 L2)
+  (cond ((null L1) NIL)
+        ((null L2) NIL)
+        ((member (car L1) L2) (cons (car L1) (inter (cdr L1) L2)))
+        (t (inter (cdr L1) L2))
+  )
+)
+
 ;Desparentizar elementos da lista
 (defun desparentize(lista)
     (cond
@@ -24,4 +33,9 @@
       ((atom(car lista)) (cons (car lista) (desparentize (cdr lista))))
       (t (append (desparentize (car lista)) (desparentize(cdr lista))))
     )
+)
+
+;Tirar elementos que não são comuns nas duas listas
+(defun tira_nao_comuns(l1 l2)
+  (desparentize(cons (inter l1 l2) (inter l2 l1)))
 )
