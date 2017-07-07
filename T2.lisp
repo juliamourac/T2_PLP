@@ -10,13 +10,6 @@
 (t (+ (conta-atomos (car lista))
 (conta-atomos (cdr lista))))))
 
-;retira as ocorrências do elemento e de lista
-(defun tira_elem (lista e)
-(do ((l-aux lista (cdr l-aux)) (res ( )))
-((null l-aux) res)
-(if (not (equal (car l-aux) e))
-(setq res (append res (list (car l-aux)))))))
-
 ;Intersecção entre duas listas
 (defun inter (L1 L2)
   (cond ((null L1) NIL)
@@ -38,4 +31,26 @@
 ;Tirar elementos que não são comuns nas duas listas
 (defun tira_nao_comuns(l1 l2)
   (desparentize(cons (inter l1 l2) (inter l2 l1)))
+)(setq lista1 '(1 2 3 4 1 1 2))
+
+;Conta ocorrência de elemento na lista
+(defun conta_ocorrencia(elemento lista)
+  (setq contador 0)
+  (cond
+      ((null lista) 0)
+      (t (dolist (e lista)
+        (if (equal e elemento) (setq contador (+ contador 1))))
+        (setq contador contador))
+    )
+ )
+
+(defun monta_pares(li)
+  (cond
+    ((null li) NIL)
+    (t (cons (cons (car li) (conta_ocorrencia (car li) li)) (monta_pares(cdr li))))
+  )
+)
+
+(defun conta_atomos(lis1 lis2)
+  (monta_pares(tira_nao_comuns (desparentize lis1) (desparentize lis2)))
 )
